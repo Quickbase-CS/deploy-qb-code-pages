@@ -7,8 +7,8 @@ const {
   addUpdateDbPage,
 } = require('./helpers/helper');
 
-const xmlparser = require('fast-xml-parser');
-
+const { XMLParser } = require('fast-xml-parser/src/fxp');
+const parser = new XMLParser();
 let arguments = process.argv;
 console.log('Script started reading arguments', arguments);
 
@@ -43,10 +43,10 @@ const run = async () => {
     const existingQbCliConfigs = JSON.parse(decoded);
 
     const gitRepoObjForDeployDirObj = {
-      owner: existingQbCliConfigs.owner,
-      repo: existingQbCliConfigs.repo,
+      owner: OWNER,
+      repo: REPO_NAME,
       path: existingQbCliConfigs.deployPath,
-      ref: existingQbCliConfigs.ref,
+      ref: BRANCH || 'master',
     };
 
     let deploymentType = null;
@@ -119,14 +119,16 @@ const run = async () => {
 
       if (result.length > 0) {
         result.forEach((element) => {
-          const responseObj = xmlparser(element);
-          const errorCode = responseObj.qdbapi.errcode;
-          const pageName = errData.qdbapi.pagename;
-          console.error(`Error Occurred for File: ${pageName}\n\n`);
-          if (errorCode) {
+          const responseObj = parser?.parse(element.data);
+          const errorCode = responseObj?.qdbapi?.errcode;
+          const pageName = errData?.qdbapi?.pagename;
+
+          if (errorCode !== 0) {
+            console.error(`Error Occurred for File: ${pageName}\n\n`);
             console.error(
               `API call failure - files weren\'t deployed successfully - see error details below. If you need to update your user/application token, you can run deployqb init again to reconfigure those values.\n\nQuick Base Response:`
             );
+            console.log(responseObj);
             return;
           }
         });
@@ -139,7 +141,7 @@ const run = async () => {
       );
 
       if (err?.response?.statusText) {
-        console.error(err.response.statusText);
+        console.error(err?.response?.statusText);
       }
 
       if (err?.response?.data) {
@@ -147,7 +149,7 @@ const run = async () => {
       }
 
       if (err?.response?.config?.data) {
-        var errData = xmlparser.parse(err?.response?.config?.data);
+        var errData = parser.parse(err?.response?.config?.data);
         var pageName = errData?.qdbapi?.pagename;
         console.error(`Error Occurred for File: ${pageName}\n\n`);
       }

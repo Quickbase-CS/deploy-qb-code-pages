@@ -1,7 +1,7 @@
 const { Octokit } = require('@octokit/rest');
 
 const octokit = new Octokit({
-  auth: process.env.GITHUB_TOKEN,
+  auth: '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', //process.env.GITHUB_TOKEN,
 });
 
 const axios = require('axios');
