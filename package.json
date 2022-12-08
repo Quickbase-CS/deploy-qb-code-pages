@@ -1,5 +1,5 @@
 {
-  "name": "deployqbforeact",
+  "name": "deployqbforreact",
   "version": "1.0.0",
   "description": "This package will enable the react projects to be deployed to qb pages",
   "main": "app.js",
@@ -21,5 +21,13 @@
   "bugs": {
     "url": "https://github.com/Quickbase-CS/deployqbforeact/issues"
   },
-  "homepage": "https://github.com/Quickbase-CS/deployqbforeact#readme"
+  "homepage": "https://github.com/Quickbase-CS/deployqbforeact#readme",
+  "dependencies": {
+    "@octokit/rest": "^19.0.5",
+    "axios": "^1.2.0",
+    "debug": "~2.6.9",
+    "dotenv": "^16.0.3",
+    "fast-xml-parser": "^4.0.12",
+    "strip-bom": "^4.0.0"
+  }
 }
