@@ -15,11 +15,11 @@ console.log('Script started reading arguments', arguments);
 const run = async () => {
   try {
     console.log('Script started');
-    const OWNER = arguments[2].split('=')[1];
-    const REPO_NAME = arguments[3].split('=')[1];
-    const APP_TOKEN = arguments[4].split('=')[1];
-    const USER_TOKEN = arguments[5].split('=')[1];
-    const BRANCH = arguments[6].split('=')[1];
+    const OWNER = arguments[2]?.split('=')[1];
+    const REPO_NAME = arguments[3]?.split('=')[1];
+    const APP_TOKEN = arguments[4]?.split('=')[1];
+    const USER_TOKEN = arguments[5]?.split('=')[1];
+    const BRANCH = arguments[6]?.split('=')[1];
 
     const gitRepoObjForQbCLi = {
       owner: OWNER,
