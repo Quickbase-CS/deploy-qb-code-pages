@@ -1,0 +1,25 @@
+{
+  "name": "deployqbforeact",
+  "version": "1.0.0",
+  "description": "This package will enable the react projects to be deployed to qb pages",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Quickbase-CS/deployqbforeact.git"
+  },
+  "bin": {
+    "deployqbforreact": "app.js"
+  },
+  "keywords": [
+    "deployqbforreact"
+  ],
+  "author": "Akhilesh Sharma",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Quickbase-CS/deployqbforeact/issues"
+  },
+  "homepage": "https://github.com/Quickbase-CS/deployqbforeact#readme"
+}
