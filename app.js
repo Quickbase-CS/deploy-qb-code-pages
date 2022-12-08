@@ -19,12 +19,13 @@ const run = async () => {
     const REPO_NAME = arguments[3].split('=')[1];
     const APP_TOKEN = arguments[4].split('=')[1];
     const USER_TOKEN = arguments[5].split('=')[1];
+    const BRANCH = arguments[6].split('=')[1];
 
     const gitRepoObjForQbCLi = {
       owner: OWNER,
       repo: REPO_NAME,
-      path: 'qblcli.json',
-      ref: 'master',
+      path: 'qbcli.json',
+      ref: BRANCH || 'master',
     };
 
     if (APP_TOKEN === '' || USER_TOKEN === '') {
