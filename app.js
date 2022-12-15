@@ -10,16 +10,18 @@ const {
 const { XMLParser } = require('fast-xml-parser/src/fxp');
 const parser = new XMLParser();
 let arguments = process.argv;
+
 console.log('Script started reading arguments', arguments);
 
 const run = async () => {
   try {
     console.log('Script started');
-    const OWNER = arguments[2]?.split('=')[1];
-    const REPO_NAME = arguments[3]?.split('=')[1];
-    const APP_TOKEN = arguments[4]?.split('=')[1];
-    const USER_TOKEN = arguments[5]?.split('=')[1];
-    const BRANCH = arguments[6]?.split('=')[1];
+    const GITHUB_TOKEN = arguments[2]?.split('=')[1];
+    const OWNER = arguments[3]?.split('=')[1];
+    const REPO_NAME = arguments[4]?.split('=')[1];
+    const APP_TOKEN = arguments[5]?.split('=')[1];
+    const USER_TOKEN = arguments[6]?.split('=')[1];
+    const BRANCH = arguments[7]?.split('=')[1];
 
     const gitRepoObjForQbCLi = {
       owner: OWNER,
