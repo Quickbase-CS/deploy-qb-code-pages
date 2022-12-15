@@ -11,7 +11,6 @@ const axios = require('axios');
 
 module.exports = {
   getFileContent: async ({ owner, repo, path, ref }) => {
-    // const contentPath = path;
     const { data } = await octokit.rest.repos.getContent({
       owner: owner,
       repo: repo,
@@ -27,8 +26,8 @@ module.exports = {
    */
   getFileNameFromExt_h: (array, extension) => {
     const length = array.length;
-    var name = false;
-    for (var i = 0; i < length; i++) {
+    let name = false;
+    for (let i = 0; i < length; i++) {
       if (array[i].includes(extension)) {
         name = array[i];
       }
@@ -49,7 +48,7 @@ module.exports = {
     gitRepoObjForDeployDirObj,
     stripBom
   ) {
-    var missingFiles = false;
+    let missingFiles = false;
     const escapeRegExp = (string) => {
       return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     };
@@ -59,15 +58,14 @@ module.exports = {
       return str.replace(new RegExp(escapeRegExp(find), 'g'), replace);
     };
 
-    var contents = filesArray.map(async (item) => {
+    let contents = filesArray.map(async (item) => {
       //concats the filename and path to file
-      // const { filename, path, isIndexFile } = item;
 
       const filePath = gitRepoObjForDeployDirObj.path + '/' + item.filename;
       const newObj = { ...gitRepoObjForDeployDirObj, path: filePath };
       let fileContents = await this.getFileContent(newObj);
       fileContents = Buffer.from(fileContents, 'base64').toString();
-      var returnArray = null;
+
       //if file has no content return false and set flag
       if (fileContents.length < 1 && missingFiles === false) {
         missingFiles = true;
@@ -84,7 +82,7 @@ module.exports = {
         item.dependencies.forEach((i) => {
           let dependencyFileName = filesArray[i].filename;
           let updatedFileName = `${prefix}${dependencyFileName}`;
-          //fileContents.indexOf(`pagename=${dependencyFileName}`, `pagename=${updatedFileName}`);
+
           fileContents = replaceAll(
             fileContents,
             `pagename=${dependencyFileName}`,
@@ -93,8 +91,8 @@ module.exports = {
         });
       }
 
-      var string = escapeRegExp(']]>');
-      var regexp = new RegExp(string, 'g');
+      let string = escapeRegExp(']]>');
+      let regexp = new RegExp(string, 'g');
       //if this is the index file to launch - append that information for a flag later in the script.
       if (item.isIndexFile) {
         return [
@@ -129,9 +127,9 @@ module.exports = {
     fileContentsArray,
     addUpdateDbPage
   ) {
-    var { dbid, realm, apptoken, usertoken } = configs;
+    let { dbid, realm, apptoken, usertoken } = configs;
     return fileContentsArray.map((item) => {
-      var [fileName, fileContents] = item;
+      let [fileName, fileContents] = item;
       return addUpdateDbPage(
         dbid,
         realm,
@@ -181,6 +179,15 @@ module.exports = {
 
     return returnPrefix;
   },
+  /**
+   * this methods enables user to deploy the files from the folder to the respective realm qb pages
+   * @param  {} dbid
+   * @param  {} realm
+   * @param  {} usertoken
+   * @param  {} apptoken=null
+   * @param  {} pagebody
+   * @param  {} pagename
+   */
   addUpdateDbPage: (
     dbid,
     realm,
@@ -190,11 +197,11 @@ module.exports = {
     pagename
   ) => {
     const url = `https://${realm}.quickbase.com/db/${dbid}`;
-    var apptokenString = '';
+    let apptokenString = '';
     if (apptoken) {
       apptokenString = `<apptoken>${apptoken}</apptoken>`;
     }
-    var data = `
+    let data = `
             <qdbapi>
                 <pagename>${pagename}</pagename>
                 <pagetype>1</pagetype>

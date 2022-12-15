@@ -123,7 +123,7 @@ const run = async () => {
         result.forEach((element) => {
           const responseObj = parser?.parse(element.data);
           const errorCode = responseObj?.qdbapi?.errcode;
-          const pageName = errData?.qdbapi?.pagename;
+          const pageName = responseObj?.qdbapi?.pagename;
 
           if (errorCode !== 0) {
             console.error(`Error Occurred for File: ${pageName}\n\n`);
@@ -151,14 +151,15 @@ const run = async () => {
       }
 
       if (err?.response?.config?.data) {
-        var errData = parser.parse(err?.response?.config?.data);
-        var pageName = errData?.qdbapi?.pagename;
+        let errData = parser.parse(err?.response?.config?.data);
+        let pageName = errData?.qdbapi?.pagename;
         console.error(`Error Occurred for File: ${pageName}\n\n`);
       }
-      process.exit(0);
+      process.exit(1);
     }
   } catch (err) {
     console.log(err);
+    process.exit(1);
   }
 };
 

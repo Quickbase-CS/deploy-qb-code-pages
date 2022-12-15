@@ -1,6 +1,6 @@
 {
   "name": "deployqbforreact",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "This package will enable the react projects to be deployed to qb pages",
   "main": "app.js",
   "scripts": {
