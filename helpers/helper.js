@@ -10,6 +10,17 @@ const octokit = new Octokit({
 const axios = require('axios');
 
 module.exports = {
+  /**
+   * @param  {} {owner
+   * @param  {} repo
+   * @param  {} path
+   * @param  {} ref}
+   * @param  {owner} =>{const{data}=awaitoctokit.rest.repos.getContent({owner
+   * @param  {repo} repo
+   * @param  {path} path
+   * @param  {ref} ref
+   * @param  {} }
+   */
   getFileContent: async ({ owner, repo, path, ref }) => {
     const { data } = await octokit.rest.repos.getContent({
       owner: owner,
@@ -18,6 +29,59 @@ module.exports = {
       ref: ref,
     });
     return data?.content;
+  },
+  /**
+   * @param  {} owner
+   * @param  {} repo
+   * @param  {} =>{constindex=0;const{data}=awaitoctokit.request('GET/repos/{owner}/{repo}/commits'
+   * @param  {} {owner
+   * @param  {} repo
+   * @param  {'1'} per_page
+   * @param  {{'X-GitHub-Api-Version':'2022-11-28'} headers
+   * @param  {} }
+   * @param  {} }
+   */
+  getLatestCommitSHA: async (owner, repo) => {
+    const index = 0;
+    const { data } = await octokit.request(
+      'GET /repos/{owner}/{repo}/commits',
+      {
+        owner,
+        repo,
+        per_page: '1',
+        headers: {
+          'X-GitHub-Api-Version': '2022-11-28',
+        },
+      }
+    );
+    return data[index]?.sha;
+  },
+  /**
+   * @param  {} owner
+   * @param  {} repo
+   * @param  {} commit_sha
+   * @param  {} =>{constindex=0;const{data}=awaitoctokit.request('GET/repos/{owner}/{repo}/commits/{commit_sha}/branches-where-head'
+   * @param  {} {owner
+   * @param  {} repo
+   * @param  {} commit_sha
+   * @param  {{'X-GitHub-Api-Version':'2022-11-28'} headers
+   * @param  {} }
+   * @param  {} }
+   */
+  getBranchFromLatestCommit: async (owner, repo, commit_sha) => {
+    const index = 0;
+    const { data } = await octokit.request(
+      'GET /repos/{owner}/{repo}/commits/{commit_sha}/branches-where-head',
+      {
+        owner,
+        repo,
+        commit_sha,
+        headers: {
+          'X-GitHub-Api-Version': '2022-11-28',
+        },
+      }
+    );
+    return data[index]?.name;
   },
   /**
    * Returns a filename from an array given an extension.

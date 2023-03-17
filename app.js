@@ -23,11 +23,19 @@ const run = async () => {
     const USER_TOKEN = arguments[6]?.split('=')[1];
     const BRANCH = arguments[7]?.split('=')[1];
 
+    const commit_SHA = await helpers.getLatestCommitSHA(OWNER, REPO_NAME);
+    console.log('commit_SHA', commit_SHA);
+    const branchName = await helpers.getBranchFromLatestCommit(
+      OWNER,
+      REPO_NAME,
+      commit_SHA
+    );
+
     const gitRepoObjForQbCLi = {
       owner: OWNER,
       repo: REPO_NAME,
       path: 'qbcli.json',
-      ref: BRANCH || 'master',
+      ref: branchName || BRANCH || 'master',
     };
 
     if (APP_TOKEN === '' || USER_TOKEN === '') {
@@ -48,15 +56,29 @@ const run = async () => {
       owner: OWNER,
       repo: REPO_NAME,
       path: existingQbCliConfigs.deployPath,
-      ref: BRANCH || 'master',
+      ref: branchName || BRANCH || 'master',
     };
 
     let deploymentType = null;
-    if (existingQbCliConfigs.isProd) {
+    /* if (existingQbCliConfigs.isProd) {
       deploymentType = 'prod';
     } else if (existingQbCliConfigs.isDev) {
       deploymentType = 'dev';
     } else if (existingQbCliConfigs.isFeat) {
+      deploymentType = 'feat';
+    } */
+
+    if (
+      branchName.toLocaleLowerCase() === 'master' ||
+      branchName.toLocaleLowerCase() === 'main'
+    ) {
+      deploymentType = 'prod';
+    } else if (
+      branchName.toLocaleLowerCase() === 'dev' ||
+      branchName.toLocaleLowerCase() === 'development'
+    ) {
+      deploymentType = 'dev';
+    } else {
       deploymentType = 'feat';
     }
 
