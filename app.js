@@ -22,15 +22,15 @@ const run = async () => {
     const APP_TOKEN = arguments[5]?.split('=')[1];
     const USER_TOKEN = arguments[6]?.split('=')[1];
     const BRANCH = arguments[7]?.split('=')[1];
-
-    const commit_SHA = await helpers.getLatestCommitSHA(OWNER, REPO_NAME);
+    let branchName = BRANCH;
+    /* const commit_SHA = await helpers.getLatestCommitSHA(OWNER, REPO_NAME);
     console.log('commit_SHA', commit_SHA);
     const branchName = await helpers.getBranchFromLatestCommit(
       OWNER,
       REPO_NAME,
       commit_SHA
     );
-
+    console.log('branchName', branchName); */
     const gitRepoObjForQbCLi = {
       owner: OWNER,
       repo: REPO_NAME,
