@@ -16,35 +16,29 @@ console.log('Script started reading arguments', arguments);
 const run = async () => {
   try {
     console.log('Script started');
-    // const GITHUB_TOKEN = arguments[2]?.split('=')[1];
 
+    // const GITHUB_TOKEN = arguments[2]?.split('=')[1];
     const OWNER = arguments[3]?.split('=')[1];
     const REPO_NAME = arguments[4]?.split('=')[1];
     const APP_TOKEN = arguments[5]?.split('=')[1];
     const USER_TOKEN = arguments[6]?.split('=')[1];
     const BRANCH = arguments[7]?.split('=')[1];
-    const QBCLI_FOLDER_PATH = arguments[8]?.split('=')[1] || '';
-    const DEPLOYMENT_ENV = arguments[9]?.split('=')[1];
+    const DEPLOYMENT_ENV = arguments[8]?.split('=')[1];
+    const QBCLI_FOLDER_PATH = arguments[9]?.split('=')[1] || './'; //feat/
 
-    let branchName = BRANCH;
-
-    /* const commit_SHA = await helpers.getLatestCommitSHA(OWNER, REPO_NAME);
-    console.log('commit_SHA', commit_SHA);
-    const branchName = await helpers.getBranchFromLatestCommit(
-      OWNER,
-      REPO_NAME,
-      commit_SHA
-    );
-    console.log('branchName', branchName); */
     const gitRepoObjForQbCLi = {
       owner: OWNER,
       repo: REPO_NAME,
       path: `${QBCLI_FOLDER_PATH}qbcli.json`,
-      ref: branchName || BRANCH || 'master',
+      ref: BRANCH,
     };
 
     if (APP_TOKEN === '' || USER_TOKEN === '') {
-      console.error('Please provide the apptoken/usertoken to continued');
+      console.error('Please provide the apptoken/usertoken to continue');
+    }
+
+    if (!DEPLOYMENT_ENV) {
+      console.error('Please provide the DEPLOYMENT_ENV to continue');
     }
 
     console.log('Script getFileContent started');
@@ -61,33 +55,10 @@ const run = async () => {
       owner: OWNER,
       repo: REPO_NAME,
       path: existingQbCliConfigs.deployPath || '',
-      ref: branchName || BRANCH || 'master',
+      ref: BRANCH,
     };
 
     let deploymentType = DEPLOYMENT_ENV;
-    /* if (existingQbCliConfigs.isProd) {
-      deploymentType = 'prod';
-    } else if (existingQbCliConfigs.isDev) {
-      deploymentType = 'dev';
-    } else if (existingQbCliConfigs.isFeat) {
-      deploymentType = 'feat';
-    } */
-
-    /*
-    if (
-      branchName.toLocaleLowerCase() === 'master' ||
-      branchName.toLocaleLowerCase() === 'main'
-    ) {
-      deploymentType = 'prod';
-    } else if (
-      branchName.toLocaleLowerCase() === 'dev' ||
-      branchName.toLocaleLowerCase() === 'development'
-    ) {
-      deploymentType = 'dev';
-    } else {
-      deploymentType = 'feat';
-    }
-    */
 
     //get prefix for files
     const prefix = helpers.prefixGenerator(

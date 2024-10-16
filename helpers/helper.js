@@ -215,8 +215,7 @@ module.exports = {
    * @param {String} repositoryId Repo unique identifier.
    */
   prefixGenerator: function (config, deploymentType, repositoryId) {
-    const { customPrefix, customPrefixProduction, customPrefixFeature } =
-      config;
+    const { customPrefix, customPrefixProduction } = config;
     //for dev
     if (deploymentType === 'dev') {
       if (customPrefix) {
@@ -235,7 +234,8 @@ module.exports = {
       }
     }
 
-    //for prod
+    /*
+    //for feat
     if (deploymentType === 'feat') {
       if (customPrefixFeature) {
         return `${customPrefixFeature}_${repositoryId}_`;
@@ -243,6 +243,7 @@ module.exports = {
         return `F_${repositoryId}_`;
       }
     }
+    */
 
     return returnPrefix;
   },
