@@ -24,7 +24,7 @@ const run = async () => {
     const USER_TOKEN = arguments[6]?.split('=')[1];
     const BRANCH = arguments[7]?.split('=')[1];
     const DEPLOYMENT_ENV = arguments[8]?.split('=')[1];
-    const QBCLI_FOLDER_PATH = arguments[9]?.split('=')[1] || './'; //feat/
+    const QBCLI_FOLDER_PATH = arguments[9]?.split('=')[1] || ''; //feat/
 
     const gitRepoObjForQbCLi = {
       owner: OWNER,
