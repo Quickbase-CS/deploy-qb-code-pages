@@ -16,13 +16,18 @@ console.log('Script started reading arguments', arguments);
 const run = async () => {
   try {
     console.log('Script started');
-    const GITHUB_TOKEN = arguments[2]?.split('=')[1];
+    // const GITHUB_TOKEN = arguments[2]?.split('=')[1];
+
     const OWNER = arguments[3]?.split('=')[1];
     const REPO_NAME = arguments[4]?.split('=')[1];
     const APP_TOKEN = arguments[5]?.split('=')[1];
     const USER_TOKEN = arguments[6]?.split('=')[1];
     const BRANCH = arguments[7]?.split('=')[1];
+    const QBCLI_FOLDER_PATH = arguments[8]?.split('=')[1] || '';
+    const DEPLOYMENT_ENV = arguments[9]?.split('=')[1];
+
     let branchName = BRANCH;
+
     /* const commit_SHA = await helpers.getLatestCommitSHA(OWNER, REPO_NAME);
     console.log('commit_SHA', commit_SHA);
     const branchName = await helpers.getBranchFromLatestCommit(
@@ -34,7 +39,7 @@ const run = async () => {
     const gitRepoObjForQbCLi = {
       owner: OWNER,
       repo: REPO_NAME,
-      path: 'qbcli.json',
+      path: `${QBCLI_FOLDER_PATH}qbcli.json`,
       ref: branchName || BRANCH || 'master',
     };
 
@@ -55,11 +60,11 @@ const run = async () => {
     const gitRepoObjForDeployDirObj = {
       owner: OWNER,
       repo: REPO_NAME,
-      path: existingQbCliConfigs.deployPath,
+      path: existingQbCliConfigs.deployPath || '',
       ref: branchName || BRANCH || 'master',
     };
 
-    let deploymentType = null;
+    let deploymentType = DEPLOYMENT_ENV;
     /* if (existingQbCliConfigs.isProd) {
       deploymentType = 'prod';
     } else if (existingQbCliConfigs.isDev) {
@@ -68,6 +73,7 @@ const run = async () => {
       deploymentType = 'feat';
     } */
 
+    /*
     if (
       branchName.toLocaleLowerCase() === 'master' ||
       branchName.toLocaleLowerCase() === 'main'
@@ -81,6 +87,7 @@ const run = async () => {
     } else {
       deploymentType = 'feat';
     }
+    */
 
     //get prefix for files
     const prefix = helpers.prefixGenerator(

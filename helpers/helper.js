@@ -30,6 +30,7 @@ module.exports = {
     });
     return data?.content;
   },
+
   /**
    * @param  {} owner
    * @param  {} repo
@@ -56,6 +57,7 @@ module.exports = {
     );
     return data[index]?.sha;
   },
+
   /**
    * @param  {} owner
    * @param  {} repo
@@ -83,6 +85,7 @@ module.exports = {
     );
     return data[index]?.name;
   },
+
   /**
    * Returns a filename from an array given an extension.
    * @param {String} extension The Extension of the file you are looking for
@@ -243,6 +246,7 @@ module.exports = {
 
     return returnPrefix;
   },
+
   /**
    * this methods enables user to deploy the files from the folder to the respective realm qb pages
    * @param  {} dbid
