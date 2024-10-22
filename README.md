@@ -1,4 +1,4 @@
-# DEPLOY QB SCRIPTS FOR REACT JS
+# DEPLOY QB CODE PAGES
 
 Simple overview of use/purpose.
 
