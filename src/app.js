@@ -6,6 +6,7 @@ const {
   generateAllAPICallPromises,
   addUpdateDbPage,
 } = require('./helpers/helper');
+require('dotenv').config();
 
 const { XMLParser } = require('fast-xml-parser/src/fxp');
 const parser = new XMLParser();
@@ -18,13 +19,14 @@ const run = async () => {
     console.log('Script started');
 
     // const GITHUB_TOKEN = arguments[2]?.split('=')[1];
-    const OWNER = arguments[3]?.split('=')[1];
-    const REPO_NAME = arguments[4]?.split('=')[1];
-    const APP_TOKEN = arguments[5]?.split('=')[1];
-    const USER_TOKEN = arguments[6]?.split('=')[1];
-    const BRANCH = arguments[7]?.split('=')[1];
-    const DEPLOYMENT_ENV = arguments[8]?.split('=')[1];
-    const QBCLI_FOLDER_PATH = arguments[9]?.split('=')[1] || ''; //feat/
+    const OWNER = process.env.OWNER || arguments[3]?.split('=')[1];
+    const REPO_NAME = process.env.REPO_NAME || arguments[4]?.split('=')[1];
+    const BRANCH = process.env.BRANCH || arguments[5]?.split('=')[1];
+    const APP_TOKEN = process.env.APP_TOKEN || arguments[6]?.split('=')[1];
+    const USER_TOKEN = process.env.USER_TOKEN || arguments[7]?.split('=')[1];
+    const DEPLOYMENT_ENV =
+      process.env.DEPLOYMENT_ENV || arguments[8]?.split('=')[1];
+    const QBCLI_FOLDER_PATH = arguments[9]?.split('=')[1] || ''; //process.env.DEPLOYMENT_ENV
 
     const gitRepoObjForQbCLi = {
       owner: OWNER,
@@ -91,13 +93,9 @@ const run = async () => {
       }
       console.log('Script api getAllFileContents completed');
 
-      //add the appopriate extension prefix to each file depending on whether it is dev/prod deployment.  IF an index file has been listed, set the indexFileName below.
-      let indexFileName = null;
       arrayOfFileContents = arrayOfFileContents.map((item) => {
-        const [fileName, fileContents, isIndexFile] = item;
-        if (isIndexFile) {
-          indexFileName = fileName;
-        }
+        const [fileName, fileContents] = item;
+
         return [`${prefix}${fileName}`, fileContents];
       });
 
@@ -128,7 +126,7 @@ const run = async () => {
           if (errorCode !== 0) {
             console.error(`Error Occurred for File: ${pageName}\n\n`);
             console.error(
-              `API call failure - files weren\'t deployed successfully - see error details below. If you need to update your user/application token, you can run deployqb init again to reconfigure those values.\n\nQuick Base Response:`
+              'API call failure - Failed to deploy - see error details below. If you need to update your user/application token, you can run deployqb init again to reconfigure those values.\n\nQuick Base Response:'
             );
             console.log(responseObj);
             return;
@@ -139,7 +137,7 @@ const run = async () => {
       process.exit(0);
     } catch (err) {
       console.error(
-        `API call failure - files weren\'t deployed successfully - see error details below. If you need to update your user/application token, you can run deployqb init again to reconfigure those values.\n\nQuick Base Response:`
+        'API call failure - Failed to deploy - see error details below. If you need to update your user/application token, you can run deployqb init again to reconfigure those values.\n\nQuick Base Response:'
       );
 
       if (err?.response?.statusText) {
@@ -158,7 +156,7 @@ const run = async () => {
       process.exit(1);
     }
   } catch (err) {
-    console.log(err);
+    console.log(`Error: ${err?.message || err}`);
     process.exit(1);
   }
 };

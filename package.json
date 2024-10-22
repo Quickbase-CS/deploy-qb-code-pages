@@ -1,33 +1,42 @@
 {
-  "name": "deployqbforreact",
+  "name": "deploy-qb-code-pages",
   "version": "1.0.7",
   "description": "This package will enable the react projects to be deployed to qb pages",
-  "main": "app.js",
+  "main": "./src/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/app.js",
+    "lint": "eslint . --config eslint.config.cjs"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Quickbase-CS/deployqbforeact.git"
+    "url": "git+https://github.com/Quickbase-CS/deploy-qb-code-pages.git"
   },
   "bin": {
-    "deployqbforreact": "app.js"
+    "deploy-qb-code-pages": "./src/app.js"
   },
   "keywords": [
-    "deployqbforreact"
+    "deploy-qb-code-pages"
   ],
   "author": "Akhilesh Sharma",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Quickbase-CS/deployqbforeact/issues"
+    "url": "https://github.com/Quickbase-CS/deploy-qb-code-pages/issues"
   },
-  "homepage": "https://github.com/Quickbase-CS/deployqbforeact#readme",
+  "homepage": "https://github.com/Quickbase-CS/deploy-qb-code-pages#readme",
   "dependencies": {
     "@octokit/rest": "^19.0.5",
     "axios": "^1.2.0",
     "debug": "~2.6.9",
-    "dotenv": "^16.0.3",
+    "dotenv": "^16.4.5",
     "fast-xml-parser": "^4.0.12",
     "strip-bom": "^4.0.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.13.0",
+    "eslint": "^9.13.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "globals": "^15.11.0",
+    "prettier": "^3.3.3"
   }
 }

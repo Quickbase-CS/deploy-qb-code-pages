@@ -23,10 +23,10 @@ module.exports = {
    */
   getFileContent: async ({ owner, repo, path, ref }) => {
     const { data } = await octokit.rest.repos.getContent({
-      owner: owner,
-      repo: repo,
-      path: path,
-      ref: ref,
+      owner,
+      repo,
+      path,
+      ref,
     });
     return data?.content;
   },
@@ -144,7 +144,6 @@ module.exports = {
 
       //replace dependencies if they exist.  Handles replacing depencies for the project and naming them correctly based on the prefix provided by the user.
       if (item.dependencies && item.dependencies.length > 0) {
-        let length = item.dependencies.length;
         //dependency is the numeric value set in qbcli.json file.
         item.dependencies.forEach((i) => {
           let dependencyFileName = filesArray[i].filename;
@@ -160,17 +159,9 @@ module.exports = {
 
       let string = escapeRegExp(']]>');
       let regexp = new RegExp(string, 'g');
-      //if this is the index file to launch - append that information for a flag later in the script.
-      if (item.isIndexFile) {
-        return [
-          item.filename,
-          fileContents.replace(regexp, ']]]]><![CDATA[>'),
-          item.isIndexFile,
-        ];
-      } else {
-        //sanitize fileContents for CDATA tags
-        return [item.filename, fileContents.replace(regexp, ']]]]><![CDATA[>')];
-      }
+
+      //sanitize fileContents for CDATA tags
+      return [item.filename, fileContents.replace(regexp, ']]]]><![CDATA[>')];
     });
 
     if (missingFiles) {
