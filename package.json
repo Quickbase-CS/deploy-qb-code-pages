@@ -28,7 +28,7 @@
     "axios": "^1.2.0",
     "debug": "~2.6.9",
     "dotenv": "^16.4.5",
-    "fast-xml-parser": "^4.0.12",
+    "fast-xml-parser": "^4.1.2",
     "strip-bom": "^4.0.0"
   },
   "devDependencies": {
