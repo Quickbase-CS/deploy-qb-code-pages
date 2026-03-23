@@ -1,0 +1,16 @@
+name: Mend Security Scan
+
+on:
+  push:
+    branches: [main, feature/mend-scanning]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '0 6 * * 1'  # Weekly, Monday 6am UTC
+  workflow_dispatch:
+
+jobs:
+  mend:
+    uses: Quickbase-CS/.github/.github/workflows/mend-scan.yml@feature/mend-scanning
+    secrets: inherit
+
